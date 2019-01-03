@@ -6,3 +6,24 @@ body {
 a {
   color: #00B7FF;
 }
+
+.add-btn{
+  height: 40px;
+}
+
+.search-entry .form-group {
+  margin-top: 35px;
+}
+
+.search-entry .form-group input{
+  height: 60px;
+  font-size: 20px;
+}
+
+.search-entry .form-group input::placeholder{
+  font-size: 20px;
+}
+
+table{
+  font-size: 18px;
+}
