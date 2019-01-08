@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var mongoose = require('mongoose')
 var Tenant = require('../models/Tenant');
 
 router.get('/all' ,(req, res) =>{
@@ -52,11 +53,11 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
     Tenant.findByIdAndDelete(req.params.id, (err) => {
         if(err) {
-            res.send(400).send({
+            res.status(400).send({
                 message: "Error Deleting"
             })
         } else {
-            res.send(200).send({
+            res.status(200).send({
                 message: "Record Deleted"
             })
         }
