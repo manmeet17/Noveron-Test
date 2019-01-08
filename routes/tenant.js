@@ -66,29 +66,48 @@ router.delete('/:id', (req, res) => {
 
 
 router.post('/new' ,(req, res) =>{
-    let tenant = new Tenant({
-        name: req.body.name,
-        age: req.body.age,
-        gender: req.body.gender,
-        mobile_1: req.body.mobile_1,
-        mobile_2: req.body.mobile_2,
-        mobile_3: req.body.mobile_3,
-        address_1: req.body.address_1,
-        city: req.body.city,
-        country: req.body.country,
-        location: req.body.location
-    });
 
-    tenant.save((err) => {
-        if (err) {
-            res.status(400).json({
-                message: "Some error",
-                error: err
+    Tenant.findOne({name: req.body.name,mobile_1: req.body.mobile_1}, (err, doc) =>{
+        if(doc!=null){
+            Tenant.findOneAndUpdate({name: req.body.name,mobile_1: req.body.mobile_1},{$set: req.body}, {new: true} ,(error, record) =>{
+                if(err) {
+                    res.status(400).send({
+                        message: 'Error updating',
+                        error
+                    });
+                } else {
+                    res.status(200).send({
+                        message: 'Record Updated',
+                        data: record
+                    });
+                }
             });
         } else {
-            res.status(200).json({
-                message: "Record created",
-                data: tenant
+            let tenant = new Tenant({
+                name: req.body.name,
+                age: req.body.age,
+                gender: req.body.gender,
+                mobile_1: req.body.mobile_1,
+                mobile_2: req.body.mobile_2,
+                mobile_3: req.body.mobile_3,
+                address_1: req.body.address_1,
+                city: req.body.city,
+                country: req.body.country,
+                location: req.body.location
+            });
+        
+            tenant.save((err) => {
+                if (err) {
+                    res.status(400).json({
+                        message: "Some error",
+                        error: err
+                    });
+                } else {
+                    res.status(200).json({
+                        message: "Record created",
+                        data: tenant
+                    });
+                }
             });
         }
     });
